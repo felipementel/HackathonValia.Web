@@ -14,4 +14,15 @@ namespace Hackathon.VALIA.WEB.Models
 
         public string Status { get; set; }
     }
+
+    public class Erros
+    {
+        public int Linha { get; set; }
+
+        public int PosicaoInicial { get; set; }
+        
+        public int Tamanho { get; set; }
+
+        public string Texto { get; set; }
+    }
 }
