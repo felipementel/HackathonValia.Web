@@ -43,7 +43,7 @@ namespace Hackathon.VALIA.WEB.Pages
             CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
 
             // Get a reference to the file share we created previously.
-            CloudFileShare share = fileClient.GetShareReference("patrocinador1");
+            CloudFileShare share = fileClient.GetShareReference(HttpContext.User.Identity.Name.Split("@").First());
 
             await share.CreateIfNotExistsAsync();
             // Ensure that the share exists.
@@ -54,21 +54,29 @@ namespace Hackathon.VALIA.WEB.Pages
             // Get a reference to the directory we created previously.
             CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(DateTime.Now.ToString("yyyyMMdd"));
 
-            sampleDir.CreateIfNotExistsAsync();
+            await sampleDir.CreateIfNotExistsAsync();
 
-            FileInfo fileUpload = new FileInfo(@"c:\Temp\patrocinador2.txt");
+            Stream sr1 = UploadArquivo1.OpenReadStream();
 
-            var cloudFile = sampleDir.GetFileReference("myfile.txt");
+            var cloudFile = sampleDir.GetFileReference(UploadArquivo1.FileName);
 
-            using (FileStream fs = fileUpload.OpenRead())
-            {
-                await cloudFile.UploadFromStreamAsync(fs);
-            }
+            await cloudFile.UploadFromStreamAsync(sr1);
 
-            // Get a reference to the file we created previously.
-            CloudFile fileDownload = sampleDir.GetFileReference("myfile.txt");
+            //// vini
 
-            await fileDownload.DownloadToFileAsync(@"c:\luiZ.txt", FileMode.CreateNew);
+            //FileInfo fileUpload = new FileInfo(@"c:\Temp\patrocinador2.txt");
+
+            /////var cloudFile = sampleDir.GetFileReference("myfile.txt");
+
+            //using (FileStream fs = fileUpload.OpenRead())
+            //{
+            //    await cloudFile.UploadFromStreamAsync(fs);
+            //}
+
+            //// Get a reference to the file we created previously.
+            //CloudFile fileDownload = sampleDir.GetFileReference("myfile.txt");
+
+            //await fileDownload.DownloadToFileAsync(@"c:\luiZ.txt", FileMode.CreateNew);
 
             //// Ensure that the file exists.
             //if (await fileDownload.ExistsAsync())
