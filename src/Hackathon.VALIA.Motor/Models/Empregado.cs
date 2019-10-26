@@ -73,12 +73,12 @@ namespace POCAttribute.Models
 
                 using (_context)
                 {
-                    //Arquivo arquivo = _context.Arquivos.FirstOrDefault(a => a.NomeArquivo.Equals(fileName));
+                    Arquivo arquivo = _context.Arquivos.FirstOrDefault(a => a.NomeArquivo.Equals(fileName));
 
-                    //if (arquivo == null)
-                    //{
-                    //    throw new NullReferenceException("O arquivo " + fileName + " não foi localizado");
-                    //}
+                    if (arquivo == null)
+                    {
+                        throw new NullReferenceException("O arquivo " + fileName + " não foi localizado");
+                    }
 
                     Erros erro = new Erros
                     {

@@ -59,7 +59,7 @@ namespace POCAttribute
 
                                     if (isContent)
                                     {
-                                        Empregado empregado = new Empregado(line, count, "teste" + count + ".txt");
+                                        Empregado empregado = new Empregado(line, count, cloudFile.Name);
                                         Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
                                     }
                                 }
