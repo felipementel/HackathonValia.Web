@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
+namespace Hackathon.VALIA.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191026114919_unificado_v1")]
-    partial class unificado_v1
+    [Migration("20191026144728_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LinhaId")
+                    b.Property<int?>("ErroId")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeArquivo")
@@ -38,22 +38,33 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TipoArquivoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("User")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ArquivoId");
+
+                    b.HasIndex("TipoArquivoId");
 
                     b.ToTable("Arquivos");
                 });
 
             modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Erros", b =>
                 {
-                    b.Property<int>("LinhaId")
+                    b.Property<int>("ErroId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ArquivoId")
+                    b.Property<int>("ArquivoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Campo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Linha")
                         .HasColumnType("int");
 
                     b.Property<int>("PosicaoInicial")
@@ -65,18 +76,42 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                     b.Property<string>("Texto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LinhaId");
+                    b.HasKey("ErroId");
 
                     b.HasIndex("ArquivoId");
 
                     b.ToTable("Erros");
                 });
 
+            modelBuilder.Entity("Hackathon.VALIA.WEB.Models.TipoArquivo", b =>
+                {
+                    b.Property<int>("TipoArquivoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NomeTipoArquivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TipoArquivoId");
+
+                    b.ToTable("TipoArquivos");
+                });
+
+            modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Arquivo", b =>
+                {
+                    b.HasOne("Hackathon.VALIA.WEB.Models.TipoArquivo", "TipoArquivo")
+                        .WithMany()
+                        .HasForeignKey("TipoArquivoId");
+                });
+
             modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Erros", b =>
                 {
                     b.HasOne("Hackathon.VALIA.WEB.Models.Arquivo", null)
                         .WithMany("Erros")
-                        .HasForeignKey("ArquivoId");
+                        .HasForeignKey("ArquivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

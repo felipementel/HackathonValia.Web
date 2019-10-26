@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\ApplicationDb\20191026035454_InitialDatabase_Application.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026035454_InitialDatabase_Application.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026114737_unificado_v1.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026114737_unificado_v1.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026114919_unificado_v1.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026114919_unificado_v1.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026115147_unificado_v2.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191026115147_unificado_v2.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDb\**" />
+    <Content Remove="Migrations\ApplicationDb\**" />
+    <EmbeddedResource Remove="Migrations\ApplicationDb\**" />
+    <None Remove="Migrations\ApplicationDb\**" />
   </ItemGroup>
 
 

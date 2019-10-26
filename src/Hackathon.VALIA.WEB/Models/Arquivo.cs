@@ -3,6 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Hackathon.VALIA.WEB.Models
 {
+    public class TipoArquivo
+    {
+        [Key]
+        public int TipoArquivoId { get; set; }
+
+        public string NomeTipoArquivo { get; set; }
+    }
     public class Arquivo
     {
         [Key]
@@ -16,6 +23,8 @@ namespace Hackathon.VALIA.WEB.Models
         public string Status { get; set; }
 
         public int? ErroId { get; set; }
+
+        public TipoArquivo TipoArquivo { get; set; }
 
         public ICollection<Erros> Erros { get; set; }
     }
@@ -35,6 +44,6 @@ namespace Hackathon.VALIA.WEB.Models
 
         public int ArquivoId { get; set; }
 
-        public int ErroId { get; set; }
+        public int Linha { get; set; }
     }
 }

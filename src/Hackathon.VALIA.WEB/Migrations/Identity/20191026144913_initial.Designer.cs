@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hackathon.VALIA.WEB.Migrations
+namespace Hackathon.VALIA.WEB.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20191026035357_InitialDatabase_Identity")]
-    partial class InitialDatabase_Identity
+    [Migration("20191026144913_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

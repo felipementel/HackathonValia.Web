@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Hackathon.VALIA.WEB.Migrations
+namespace Hackathon.VALIA.WEB.Migrations.Identity
 {
-    public partial class InitialDatabase_Identity : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
