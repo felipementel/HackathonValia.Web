@@ -37,34 +37,13 @@ namespace Hackathon.VALIA.WEB.Pages
 
         public async Task OnPostAsync()
         {
-            //string FileUserDate = Path.Combine(
-            //    @"C:\Temp",
-            //    "uploads",
-            //    "new",
-            //    HttpContext.User.Identity.Name.Split("@").First(),
-            //    DateTime.Now.ToString("yyyyMMdd"));
-
-            //if (!Directory.Exists(FileUserDate))
-            //    Directory.CreateDirectory(FileUserDate);
-
-            //using (var fileStream = new FileStream(FileUserDate, FileMode.Create))
-            //{
-            //    await UploadArquivo1.CopyToAsync(fileStream);
-            //    await UploadArquivo2.CopyToAsync(fileStream);
-            //}
-
-            // Parse the connection string and return a reference to the storage account.
-
-            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-            //    CloudConfigurationManager.GetSetting("ConnectionStrings:StorageConnectionString"));
-
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 "DefaultEndpointsProtocol=https;AccountName=sacdesafiovalia;AccountKey=V0HTc6jddtqyKASHRWmWALyqCxFqft8yZ/nOfYDCN2jPM5R0Nq+xue/RmOSb6oKE22BsOukbNIF8tSqhkbKiAg==;EndpointSuffix=core.windows.net");
             // Create a CloudFileClient object for credentialed access to Azure Files.
             CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
 
             // Get a reference to the file share we created previously.
-            CloudFileShare share = fileClient.GetShareReference("patrocinador1");
+            CloudFileShare share = fileClient.GetShareReference(HttpContext.User.Identity.Name.Split("@").First());
 
             await share.CreateIfNotExistsAsync();
             // Ensure that the share exists.
@@ -77,22 +56,22 @@ namespace Hackathon.VALIA.WEB.Pages
 
             sampleDir.CreateIfNotExistsAsync();
 
-            FileInfo file = new FileInfo(@"c:\Temp\patrocinador1.txt");
+            FileInfo fileUpload = new FileInfo(@"c:\Temp\patrocinador2.txt");
 
             var cloudFile = sampleDir.GetFileReference("myfile.txt");
 
-            using (FileStream fs = file.OpenRead())
+            using (FileStream fs = fileUpload.OpenRead())
             {
                 await cloudFile.UploadFromStreamAsync(fs);
             }
 
+            // Get a reference to the file we created previously.
+            CloudFile fileDownload = sampleDir.GetFileReference("myfile.txt");
 
-
-            //// Get a reference to the file we created previously.
-            //CloudFile file = sampleDir.GetFileReference("Log1.txt");
+            await fileDownload.DownloadToFileAsync(@"c:\luiZ.txt", FileMode.CreateNew);
 
             //// Ensure that the file exists.
-            //if (await file.ExistsAsync())
+            //if (await fileDownload.ExistsAsync())
             //{
             //    // Write the contents of the file to the console window.
             //    Console.WriteLine(file.DownloadTextAsync().Result);
