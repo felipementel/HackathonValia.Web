@@ -18,7 +18,7 @@ namespace Hackathon.VALIA.WEB.Pages.Arquivo
             _context = context;
         }
 
-        public Arquivo Arquivo { get; set; }
+        public Models.Arquivo Arquivo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

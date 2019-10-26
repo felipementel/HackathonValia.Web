@@ -20,7 +20,7 @@ namespace Hackathon.VALIA.WEB.Pages.Arquivo
         }
 
         [BindProperty]
-        public Arquivo Arquivo { get; set; }
+        public Models.Arquivo Arquivo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
