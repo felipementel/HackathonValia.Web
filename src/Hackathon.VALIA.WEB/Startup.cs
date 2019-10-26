@@ -28,6 +28,7 @@ namespace Hackathon.VALIA.WEB
             //    .AddEntityFrameworkStores<IdentityContext>();
 
             services.AddRazorPages();
+
             services.AddApplicationInsightsTelemetry();
         }
 
