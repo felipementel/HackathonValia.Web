@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hackathon.VALIA.WEB.Models
 {
@@ -13,14 +14,19 @@ namespace Hackathon.VALIA.WEB.Models
         public string User { get; set; }
 
         public string Status { get; set; }
+
+        public int? ErroId { get; set; }
+
+        public ICollection<Erros> Erros { get; set; }
     }
 
     public class Erros
     {
-        public int Linha { get; set; }
+        [Key]
+        public int ErroId { get; set; }
 
         public int PosicaoInicial { get; set; }
-        
+
         public int Tamanho { get; set; }
 
         public string Texto { get; set; }
