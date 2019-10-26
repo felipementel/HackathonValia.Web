@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Hackathon.VALIA.WEB.Data;
+using Hackathon.VALIA.WEB.Models;
 
-namespace Hackathon.VALIA.WEB.Pages.Arquivo
+namespace Hackathon.VALIA.WEB.Pages.Erros
 {
     public class DetailsModel : PageModel
     {
@@ -18,7 +19,7 @@ namespace Hackathon.VALIA.WEB.Pages.Arquivo
             _context = context;
         }
 
-        public Models.Arquivo Arquivo { get; set; }
+        public List<Models.Erros> Erros { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,14 +28,9 @@ namespace Hackathon.VALIA.WEB.Pages.Arquivo
                 return NotFound();
             }
 
-            Arquivo = await _context.Arquivos.FirstOrDefaultAsync(m => m.ArquivoId == id);
+            Erros = await _context.Erros.Where(m => m.ArquivoId == id).ToListAsync();
 
-            List<Models.Arquivo> lista = await _context.Arquivos.ToListAsync();
-
-            List<Models.Erros> listaErros = await _context.Erros.Where(p => p.ArquivoId == id).ToListAsync();
-                //lista.SelectMany(o => o.Erros.Where(p => p.ArquivoId == id)).ToList();
-
-            if (Arquivo == null)
+            if (Erros == null)
             {
                 return NotFound();
             }

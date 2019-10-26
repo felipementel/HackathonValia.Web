@@ -43,7 +43,7 @@ namespace Hackathon.VALIA.WEB.Pages
             CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
 
             // Get a reference to the file share we created previously.
-            CloudFileShare share = fileClient.GetShareReference(HttpContext.User.Identity.Name.Replace(".","").Replace(".", "").Split("@").First());
+            CloudFileShare share = fileClient.GetShareReference("pat" + HttpContext.User.Identity.Name.Replace(".","").Replace(".", "").Split("@").First());
 
             await share.CreateIfNotExistsAsync();
             // Ensure that the share exists.

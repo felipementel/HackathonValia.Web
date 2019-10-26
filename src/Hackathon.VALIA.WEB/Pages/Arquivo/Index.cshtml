@@ -39,9 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ArquivoId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ArquivoId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ArquivoId">Delete</a>
+                <a asp-page="/Erros/Details" asp-route-id="@item.ArquivoId">Details</a>
             </td>
         </tr>
 }
