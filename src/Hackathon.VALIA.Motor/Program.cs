@@ -9,6 +9,7 @@ using POCAttribute.Models;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace POCAttribute
@@ -17,43 +18,49 @@ namespace POCAttribute
     {
         public static async Task Main(string[] args)
         {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-            var config = builder.Build();
-
-            TelemetryConfiguration telemetryConfig = TelemetryConfiguration.CreateDefault();
-            telemetryConfig.InstrumentationKey = config.GetSection("ApplicationInsights:InstrumentationKey").Value;
-            TelemetryClient telemetryClient = new TelemetryClient(telemetryConfig);
-
-            try
+            do
             {
-                Setup.SetCulture();
+                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+                var config = builder.Build();
 
-                AzureFileStorageClient fileStorageClient = new AzureFileStorageClient();
-                var cloudFiles = await fileStorageClient.GetFiles();
+                TelemetryConfiguration telemetryConfig = TelemetryConfiguration.CreateDefault();
+                telemetryConfig.InstrumentationKey = config.GetSection("ApplicationInsights:InstrumentationKey").Value;
+                TelemetryClient telemetryClient = new TelemetryClient(telemetryConfig);
 
-                //if (Directory.Exists(config["FilesDirectory"]))
-                //{
-                //    DirectoryInfo dirInfo = new DirectoryInfo(config["FilesDirectory"]);
-                foreach (CloudFile cloudFile in cloudFiles)
+                try
                 {
-                    //var lines = File.ReadLines(filePath);
-                    //string lines = cloudFile.DownloadTextAsync().Result;
+                    Setup.SetCulture();
 
+                    AzureFileStorageClient fileStorageClient = new AzureFileStorageClient();
+                    var cloudFiles = await fileStorageClient.GetFiles();
 
-                    using (var stream = await cloudFile.OpenReadAsync())
+                    //if (Directory.Exists(config["FilesDirectory"]))
+                    //{
+                    //    DirectoryInfo dirInfo = new DirectoryInfo(config["FilesDirectory"]);
+                    foreach (CloudFile cloudFile in cloudFiles)
                     {
-                        int count = 0;
-                        bool isContent;
-                        string line;
+                        //var lines = File.ReadLines(filePath);
+                        //string lines = cloudFile.DownloadTextAsync().Result;
 
-                        //if (lineCount > 2)
-                        //{
-                            using (StreamReader reader = new StreamReader(stream))
+                        FileInfo f = new FileInfo(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
+                        //File.Create(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
+                        if (File.Exists(f.FullName))
+                        {
+                            StreamReader stream = new StreamReader(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
+                            //using (var stream = await cloudFile.OpenReadAsync())
                             {
-                                while (!reader.EndOfStream)
+                                int count = 0;
+                                bool isContent;
+                                string line;
+
+                                //if (lineCount > 2)
+                                //{
+                                //using (StreamReader reader = new StreamReader(stream))
+                                //{
+                                while (!stream.EndOfStream)
                                 {
                                     Console.WriteLine();
-                                    line = reader.ReadLine();
+                                    line = stream.ReadLine();
                                     count++;
                                     isContent = count > 1;
 
@@ -63,22 +70,29 @@ namespace POCAttribute
                                         Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
                                     }
                                 }
-                                Console.WriteLine("Fim do processamento do arquivo \"{0}\"", cloudFile.Name);
+                                //Console.WriteLine("Fim do processamento do arquivo \"{0}\"", cloudFile.Name);
+                                //}
+                                //}
+                                //else
+                                //{
+                                //    throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
+                                //}
                             }
-                        //}
-                        //else
-                        //{
-                        //    throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
-                        //}
+                            stream.Close();
+                        }
+
+                        File.Move(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)), Path.Combine(@"\\FELIPE-DELLG7\Temp2\", Path.GetFileName(cloudFile.Name)));
                     }
+
+                    //Console.ReadKey();
+                }
+                catch (Exception ex)
+                {
+                    telemetryClient.TrackException(ex);
                 }
 
-                Console.ReadKey();
-            }
-            catch (Exception ex)
-            {
-                telemetryClient.TrackException(ex);
-            }
+                Thread.Sleep(1000);
+            } while (true);
         }
     }
 }

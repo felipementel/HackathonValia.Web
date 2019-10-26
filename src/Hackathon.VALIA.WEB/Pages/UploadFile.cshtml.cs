@@ -20,10 +20,13 @@ namespace Hackathon.VALIA.WEB.Pages
     public class UploadFileModel : PageModel
     {
         private IWebHostEnvironment _webhostenvironment;
+        private readonly Hackathon.VALIA.WEB.Data.ApplicationDbContext _context;
 
-        public UploadFileModel(IWebHostEnvironment webhostenvironment)
+        public UploadFileModel(IWebHostEnvironment webhostenvironment,
+            Hackathon.VALIA.WEB.Data.ApplicationDbContext context)
         {
             _webhostenvironment = webhostenvironment;
+            _context = context;
         }
         public void OnGet()
         {
@@ -64,7 +67,31 @@ namespace Hackathon.VALIA.WEB.Pages
             var cloudFile = sampleDir.GetFileReference(UploadArquivo1.FileName);
 
             await cloudFile.UploadFromStreamAsync(sr1);
+            sr1.Close();
 
+
+            StreamReader sr = new StreamReader(Path.Combine(@"C:\Users\Felipe\Downloads\", UploadArquivo1.FileName));
+
+            //System.IO.File.Create(Path.Combine(@"C:\Users\Felipe\Downloads\", "2", UploadArquivo1.FileName));
+            StreamWriter sw = new StreamWriter(Path.Combine(@"D:\OneDrive\Novo",Path.GetFileName(UploadArquivo1.FileName) + "111.txt"));
+            while (!sr.EndOfStream)
+            {
+                sw.WriteLine(sr.ReadLine());
+            }
+
+            sr.Close();
+            sw.Close();
+
+            Models.Arquivo arq = new Models.Arquivo();
+            arq.NomeArquivo = UploadArquivo1.FileName;
+            arq.User = HttpContext.User.Identity.Name.Replace(".", "").Replace(".", "").Split("@").First();
+            arq.Status = "Novo";
+            arq.TipoArquivo = new Models.TipoArquivo();
+            arq.TipoArquivo.NomeTipoArquivo = "Empregado";
+
+            _context.Arquivos.Add(arq);
+
+            await _context.SaveChangesAsync();
 
             //// vini
 
@@ -89,6 +116,14 @@ namespace Hackathon.VALIA.WEB.Pages
             //    Console.WriteLine(file.DownloadTextAsync().Result);
             //}
 
+        }
+
+        public void CopyStream(Stream stream, string destPath)
+        {
+            using (var fileStream = new FileStream(destPath, FileMode.Create, FileAccess.Write))
+            {
+                stream.CopyTo(fileStream);
+            }
         }
     }
 }
