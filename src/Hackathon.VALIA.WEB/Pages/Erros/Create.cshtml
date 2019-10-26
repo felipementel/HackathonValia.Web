@@ -1,0 +1,63 @@
+﻿@page
+@model Hackathon.VALIA.WEB.Pages.Erros.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Erros</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Erros.PosicaoInicial" class="control-label"></label>
+                <input asp-for="Erros.PosicaoInicial" class="form-control" />
+                <span asp-validation-for="Erros.PosicaoInicial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.PosicaoFinal" class="control-label"></label>
+                <input asp-for="Erros.PosicaoFinal" class="form-control" />
+                <span asp-validation-for="Erros.PosicaoFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.Linha" class="control-label"></label>
+                <input asp-for="Erros.Linha" class="form-control" />
+                <span asp-validation-for="Erros.Linha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.Tamanho" class="control-label"></label>
+                <input asp-for="Erros.Tamanho" class="form-control" />
+                <span asp-validation-for="Erros.Tamanho" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.Texto" class="control-label"></label>
+                <input asp-for="Erros.Texto" class="form-control" />
+                <span asp-validation-for="Erros.Texto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.Campo" class="control-label"></label>
+                <input asp-for="Erros.Campo" class="form-control" />
+                <span asp-validation-for="Erros.Campo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Erros.ArquivoId" class="control-label"></label>
+                <select asp-for="Erros.ArquivoId" class ="form-control" asp-items="ViewBag.ArquivoId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
