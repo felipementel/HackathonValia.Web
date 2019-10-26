@@ -27,6 +27,10 @@ namespace Hackathon.VALIA.WEB.Models
 
         public int PosicaoInicial { get; set; }
 
+        public int PosicaoFinal { get; set; }
+
+        public int Linha { get; set; }
+
         public int Tamanho { get; set; }
 
         public string Texto { get; set; }
@@ -35,6 +39,5 @@ namespace Hackathon.VALIA.WEB.Models
 
         public int ArquivoId { get; set; }
 
-        public int ErroId { get; set; }
     }
 }

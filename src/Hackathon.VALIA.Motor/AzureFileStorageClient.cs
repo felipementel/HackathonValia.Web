@@ -27,7 +27,7 @@ namespace POCAttribute
             {
                 CloudFileDirectory rootDir = share.GetRootDirectoryReference();
                 CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(DateTime.Now.ToString("yyyyMMdd"));
-                if (await sampleDir.ExistsAsync())
+                if (await sampleDir.ExistsAsync())                            //Console.WriteLine(cloudFile.Uri.ToString()+'\n');
                 {
                     do
                     {
@@ -39,7 +39,7 @@ namespace POCAttribute
                         foreach (IListFileItem listResultItem in resultSegment.Results)
                         {
                             var cloudFile = sampleDir.GetFileReference(listResultItem.Uri.ToString());
-                            Console.WriteLine(cloudFile.Uri.ToString()+'\n');
+
                             //await cloudFile.DownloadToFileAsync(cloudFile.Uri.ToString(), FileMode.Create);
                         }
                     }
