@@ -1,0 +1,5 @@
+add-migrations -context IdentityContext
+update-database 
+++++++++++++++++++++++++++++++++++++++++++++++
+add-migrations -context ApplicationDbContext
+update-database 
