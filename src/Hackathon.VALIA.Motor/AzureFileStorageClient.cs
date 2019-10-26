@@ -15,8 +15,10 @@ namespace POCAttribute
     {
 
         public readonly static string AzureStorageAccount = "DefaultEndpointsProtocol=https;AccountName=sacdesafiovalia;AccountKey=V0HTc6jddtqyKASHRWmWALyqCxFqft8yZ/nOfYDCN2jPM5R0Nq+xue/RmOSb6oKE22BsOukbNIF8tSqhkbKiAg==;EndpointSuffix=core.windows.net";
-        public async Task DownloadFile()
+        public async Task<IEnumerable<CloudFile>> GetFiles()
         {
+            List<CloudFile> cloudFiles = new List<CloudFile>();
+
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(AzureStorageAccount);
             CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
 
@@ -27,7 +29,7 @@ namespace POCAttribute
             {
                 CloudFileDirectory rootDir = share.GetRootDirectoryReference();
                 CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(DateTime.Now.ToString("yyyyMMdd"));
-                if (await sampleDir.ExistsAsync())                            //Console.WriteLine(cloudFile.Uri.ToString()+'\n');
+                if (await sampleDir.ExistsAsync())               
                 {
                     do
                     {
@@ -35,17 +37,19 @@ namespace POCAttribute
                         token = resultSegment.ContinuationToken;
 
                         List<IListFileItem> listedFileItems = new List<IListFileItem>();
-
+                        
                         foreach (IListFileItem listResultItem in resultSegment.Results)
                         {
-                            var cloudFile = sampleDir.GetFileReference(listResultItem.Uri.ToString());
-
-                            //await cloudFile.DownloadToFileAsync(cloudFile.Uri.ToString(), FileMode.Create);
+                            CloudFile cloudFile = sampleDir.GetFileReference(listResultItem.Uri.ToString());
+                            cloudFiles.Add(cloudFile);
                         }
+                        
                     }
                     while (token != null);
                 }
             }
+
+            return cloudFiles;
         }
 
     }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.WindowsAzure.Storage.File;
 using POCAttribute.Models;
 using System;
 using System.IO;
@@ -28,38 +29,49 @@ namespace POCAttribute
                 Setup.SetCulture();
 
                 AzureFileStorageClient fileStorageClient = new AzureFileStorageClient();
-                await fileStorageClient.DownloadFile();
+                var cloudFiles = await fileStorageClient.GetFiles();
 
                 //if (Directory.Exists(config["FilesDirectory"]))
                 //{
                 //    DirectoryInfo dirInfo = new DirectoryInfo(config["FilesDirectory"]);
-                //    foreach (string filePath in Directory.EnumerateFiles(config["FilesDirectory"], "*.txt"))
-                //    {
-                //        var lines = File.ReadLines(filePath);
-                //        int lineCount = lines.Count();
-                //        int count = 0;
-                //        bool isContent;
-                //        if (lineCount > 2)
-                //        {
-                //            foreach (string line in lines)
-                //            {
-                //                count++;
-                //                isContent = (count > 1 && count < lineCount);
+                foreach (CloudFile cloudFile in cloudFiles)
+                {
+                    //var lines = File.ReadLines(filePath);
+                    //string lines = cloudFile.DownloadTextAsync().Result;
 
-                //                if (isContent)
-                //                {
-                //                    Empregado empregado = new Empregado(line, count, "teste" + count + ".txt");
-                //                    Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
-                //                }
-                //            }
-                //            Console.WriteLine("Fim do processamento do arquivo \"{0}\"", filePath);
-                //        }
-                //        else
-                //        {
-                //            throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
-                //        }
-                //    }
-                //}
+
+                    using (var stream = await cloudFile.OpenReadAsync())
+                    {
+                        int count = 0;
+                        bool isContent;
+                        string line;
+
+                        //if (lineCount > 2)
+                        //{
+                            using (StreamReader reader = new StreamReader(stream))
+                            {
+                                while (!reader.EndOfStream)
+                                {
+                                    Console.WriteLine();
+                                    line = reader.ReadLine();
+                                    count++;
+                                    isContent = count > 1;
+
+                                    if (isContent)
+                                    {
+                                        Empregado empregado = new Empregado(line, count, "teste" + count + ".txt");
+                                        Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
+                                    }
+                                }
+                                Console.WriteLine("Fim do processamento do arquivo \"{0}\"", cloudFile.Name);
+                            }
+                        //}
+                        //else
+                        //{
+                        //    throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
+                        //}
+                    }
+                }
 
                 Console.ReadKey();
             }

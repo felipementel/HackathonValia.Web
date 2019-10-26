@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,8 @@ namespace Hackathon.VALIA.WEB.Pages
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 "DefaultEndpointsProtocol=https;AccountName=sacdesafiovalia;AccountKey=V0HTc6jddtqyKASHRWmWALyqCxFqft8yZ/nOfYDCN2jPM5R0Nq+xue/RmOSb6oKE22BsOukbNIF8tSqhkbKiAg==;EndpointSuffix=core.windows.net");
+
+
             // Create a CloudFileClient object for credentialed access to Azure Files.
             CloudFileClient fileClient = storageAccount.CreateCloudFileClient();
 
@@ -61,6 +64,7 @@ namespace Hackathon.VALIA.WEB.Pages
             var cloudFile = sampleDir.GetFileReference(UploadArquivo1.FileName);
 
             await cloudFile.UploadFromStreamAsync(sr1);
+
 
             //// vini
 
