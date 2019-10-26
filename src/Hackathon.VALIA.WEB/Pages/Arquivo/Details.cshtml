@@ -1,0 +1,37 @@
+﻿@page
+@model Hackathon.VALIA.WEB.Pages.Arquivo.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Arquivo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Arquivo.NomeArquivo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Arquivo.NomeArquivo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Arquivo.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Arquivo.User)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Arquivo.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Arquivo.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Arquivo.ArquivoId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

@@ -1,5 +1,5 @@
-add-migration InitialDatabase_Identity -context IdentityContext
+add-migration <InitialDatabase_Identity> -context IdentityContext
 update-database -context IdentityContext
 ++++++++++++++++++++++++++++++++++++++++++++++
-add-migration InitialDatabase_Application -context ApplicationDbContext
+add-migration <InitialDatabase_Application> -context ApplicationDbContext
 update-database 
