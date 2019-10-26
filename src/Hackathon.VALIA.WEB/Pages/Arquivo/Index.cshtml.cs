@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hackathon.VALIA.WEB.Pages.Arquivo
@@ -18,7 +19,7 @@ namespace Hackathon.VALIA.WEB.Pages.Arquivo
 
         public async Task OnGetAsync()
         {
-            Arquivo = await _context.Arquivos.ToListAsync();
+            Arquivo = _context.Arquivos.ToListAsync().Result.Where(p => p.User == HttpContext.User.Identity.Name.Replace(".", "").Replace(".", "").Split("@").First()).ToList<Models.Arquivo>();
         }
     }
 }
