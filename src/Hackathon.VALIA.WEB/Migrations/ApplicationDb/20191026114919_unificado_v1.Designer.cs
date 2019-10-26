@@ -4,14 +4,16 @@ using Hackathon.VALIA.WEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191026114919_unificado_v1")]
+    partial class unificado_v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ErroId")
+                    b.Property<int>("LinhaId")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeArquivo")
@@ -46,16 +48,13 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
 
             modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Erros", b =>
                 {
-                    b.Property<int>("ErroId")
+                    b.Property<int>("LinhaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ArquivoId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Campo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PosicaoInicial")
                         .HasColumnType("int");
@@ -66,7 +65,7 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                     b.Property<string>("Texto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ErroId");
+                    b.HasKey("LinhaId");
 
                     b.HasIndex("ArquivoId");
 
