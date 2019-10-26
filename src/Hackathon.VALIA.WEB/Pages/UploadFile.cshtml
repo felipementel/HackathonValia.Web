@@ -6,7 +6,13 @@
 @{
 }
     <form method="post" enctype="multipart/form-data">
+        <h4>Upload do arquivo de empregados</h4><br/><br />
         <input type="file" asp-for="UploadArquivo1" />
+
+        <br /><br /><hr />
+        <h4>Upload do arquivo de dependentes</h4><br /><br />
         <input type="file" asp-for="UploadArquivo2" />
-        <input type="submit" />
+
+        <br /><br /><hr />
+        <input class="btn btn-success btn-block" type="submit" />
     </form>
