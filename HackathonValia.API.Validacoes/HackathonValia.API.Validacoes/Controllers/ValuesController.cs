@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using HackathonValia.API.Validacoes.Models;
 
 namespace HackathonValia.API.Validacoes.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version}/[controller]")]
     [ApiController]
     public class LineRules : ControllerBase
     {
@@ -25,9 +27,11 @@ namespace HackathonValia.API.Validacoes.Controllers
         //}
 
         // POST api/values
+        //
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] EmpregadoModel empregado)
         {
+            return Ok(empregado);
         }
 
         // PUT api/values/5
