@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hackathon.VALIA.WEB.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20191025220845_v1_identity")]
-    partial class v1_identity
+    [Migration("20191026035357_InitialDatabase_Identity")]
+    partial class InitialDatabase_Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

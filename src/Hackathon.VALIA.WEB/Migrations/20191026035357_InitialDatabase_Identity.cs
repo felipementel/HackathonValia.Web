@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hackathon.VALIA.WEB.Migrations
 {
-    public partial class v1_identity : Migration
+    public partial class InitialDatabase_Identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

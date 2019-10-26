@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hackathon.VALIA.WEB.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Models.Arquivo> Arquivos { get; set; }
     }
 }
