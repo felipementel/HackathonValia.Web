@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191026040442_alter_nomearquivo")]
-    partial class alter_nomearquivo
+    [Migration("20191026125423_AddCampo3")]
+    partial class AddCampo3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

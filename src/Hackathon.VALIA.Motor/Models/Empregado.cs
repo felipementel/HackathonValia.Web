@@ -1,12 +1,22 @@
-﻿using POCAttribute.Models.ElementAttribute;
+﻿using Hackathon.VALIA.WEB.Data;
+using POCAttribute.Models.ElementAttribute;
 using System;
 using System.Reflection;
+using Hackathon.VALIA.WEB.Models;
+using System.Linq;
 
 namespace POCAttribute.Models
 {
     class Empregado
     {
-        public Empregado(string line, int lineNumber)
+        private readonly ApplicationDbContext _context;
+
+        public Empregado(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public Empregado(string line, int lineNumber, string fileName)
         {
             Type classType = typeof(Empregado);
             PropertyInfo propInfo = null;
@@ -60,6 +70,28 @@ namespace POCAttribute.Models
                 Console.WriteLine(string.Format(
                     "Um erro ocorreu ao processar a linha {0}; campo \"{1}\" (posição inicial {2})\nErro Técnico: {3}",
                     lineNumber, propInfo.Name, (attr.InitialPosition + 1).ToString(), ex.Message));
+
+                using (_context)
+                {
+                    Arquivo arquivo = _context.Arquivos.FirstOrDefault(a => a.NomeArquivo.Equals(fileName));
+
+                    if (arquivo == null)
+                    {
+                        throw new NullReferenceException("O arquivo " + fileName + " não foi localizado");
+                    }
+
+                    Erros erro = new Erros
+                    {
+                        Campo = propInfo.Name,
+                        PosicaoInicial = attr.InitialPosition + 1,
+                        Linha = lineNumber,
+                        Texto =  ex.ToString(),
+                        ArquivoId = arquivo.ArquivoId
+
+                    };
+                    _context.Erros.Add(erro);
+                    _context.SaveChanges();
+                }
             }
         }
 

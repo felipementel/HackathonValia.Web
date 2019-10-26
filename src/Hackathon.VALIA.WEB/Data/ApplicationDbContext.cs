@@ -14,5 +14,6 @@ namespace Hackathon.VALIA.WEB.Data
         }
 
         public DbSet<Models.Arquivo> Arquivos { get; set; }
+        public DbSet<Models.Erros> Erros { get; set; }
     }
 }

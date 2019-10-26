@@ -32,5 +32,9 @@ namespace Hackathon.VALIA.WEB.Models
         public string Texto { get; set; }
 
         public string Campo { get; set; }
+
+        public int ArquivoId { get; set; }
+
+        public int ErroId { get; set; }
     }
 }
