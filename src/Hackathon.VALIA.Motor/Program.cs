@@ -40,13 +40,13 @@ namespace POCAttribute
                     foreach (CloudFile cloudFile in cloudFiles)
                     {
                         //var lines = File.ReadLines(filePath);
-                        //string lines = cloudFile.DownloadTextAsync().Result;
+                        //string lines = cloudFile.DownloadTextAsync().Result;                        
 
-                        FileInfo f = new FileInfo(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
+                        FileInfo f = new FileInfo(Path.Combine(@"D:\OneDrive\Novo", Path.GetFileName(cloudFile.Name) + "111.txt"));
                         //File.Create(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
                         if (File.Exists(f.FullName))
                         {
-                            StreamReader stream = new StreamReader(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)));
+                            StreamReader stream = new StreamReader(f.FullName);
                             //using (var stream = await cloudFile.OpenReadAsync())
                             {
                                 int count = 0;
@@ -66,7 +66,8 @@ namespace POCAttribute
 
                                     if (isContent)
                                     {
-                                        Empregado empregado = new Empregado(line, count, cloudFile.Name);
+                                        string realFileName = cloudFile.Name.Substring(cloudFile.Name.LastIndexOf("/") + 1);
+                                        Empregado empregado = new Empregado(line, count, realFileName);
                                         Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
                                     }
                                 }
@@ -79,9 +80,16 @@ namespace POCAttribute
                                 //}
                             }
                             stream.Close();
+
+                            // se sucesso
+                            string newFileName = Path.GetFileName(cloudFile.Name) + "111.txt";
+                            string originPath = Path.Combine(@"D:\OneDrive\Novo", newFileName);
+                            string destinationPath = Path.Combine(@"D:\OneDrive\Parcialmentebemsucedido", newFileName);
+                            File.Move(originPath, destinationPath);
+
                         }
 
-                        File.Move(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)), Path.Combine(@"\\FELIPE-DELLG7\Temp2\", Path.GetFileName(cloudFile.Name)));
+                        //File.Move(Path.Combine(@"\\FELIPE-DELLG7\Temp\", Path.GetFileName(cloudFile.Name)), Path.Combine(@"\\FELIPE-DELLG7\Temp2\", Path.GetFileName(cloudFile.Name)));
                     }
 
                     //Console.ReadKey();

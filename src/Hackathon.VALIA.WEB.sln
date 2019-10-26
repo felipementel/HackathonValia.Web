@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.VALIA.WEB", "Hackathon.VALIA.WEB\Hackathon.VALIA.WEB.csproj", "{04B9DDB3-E563-4EAC-AB8A-E1F481F36BDB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackathon.VALIA.Motor", "Hackathon.VALIA.Motor\Hackathon.VALIA.Motor.csproj", "{70FC7AF6-E4F4-4134-BC9F-BEBC84570D90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{04B9DDB3-E563-4EAC-AB8A-E1F481F36BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04B9DDB3-E563-4EAC-AB8A-E1F481F36BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04B9DDB3-E563-4EAC-AB8A-E1F481F36BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FC7AF6-E4F4-4134-BC9F-BEBC84570D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FC7AF6-E4F4-4134-BC9F-BEBC84570D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FC7AF6-E4F4-4134-BC9F-BEBC84570D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FC7AF6-E4F4-4134-BC9F-BEBC84570D90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

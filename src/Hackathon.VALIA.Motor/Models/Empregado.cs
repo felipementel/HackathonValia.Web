@@ -4,6 +4,8 @@ using System;
 using System.Reflection;
 using Hackathon.VALIA.WEB.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace POCAttribute.Models
 {
@@ -71,8 +73,13 @@ namespace POCAttribute.Models
                     "Um erro ocorreu ao processar a linha {0}; campo \"{1}\" (posição inicial {2})\nErro Técnico: {3}",
                     lineNumber, propInfo.Name, (attr.InitialPosition + 1).ToString(), ex.Message));
 
-                using (_context)
+                var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                optionsBuilder.UseSqlServer("Server=tcp:hackathonvalia.database.windows.net,1433;Initial Catalog=DesafioValia;Persist Security Info=False;User ID=firjan;Password=!@#123qweasdzxc;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+
+                using (var _context = new ApplicationDbContext(optionsBuilder.Options))
                 {
+                    // do stuff
+            
                     Arquivo arquivo = _context.Arquivos.FirstOrDefault(a => a.NomeArquivo.Equals(fileName));
 
                     if (arquivo == null)
@@ -87,11 +94,16 @@ namespace POCAttribute.Models
                         PosicaoFinal = ((attr.InitialPosition + 1) + attr.Length) - 1,
                         Linha = lineNumber,
                         Texto =  ex.ToString(),
+                        Tamanho = attr.Length,
                         ArquivoId = 1
 
                     };
                     _context.Erros.Add(erro);
                     _context.SaveChanges();
+
+                    //string originPath = Path.Combine(@"D:\OneDrive\Novo", fileName + "111.txt");
+                    //string destinationPath = Path.Combine(@"D:\OneDrive\Parcialmentebemsucedido", fileName + "111.txt");
+                    //File.Move(originPath, destinationPath);
                 }
             }
         }

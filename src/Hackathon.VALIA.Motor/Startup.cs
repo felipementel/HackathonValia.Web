@@ -24,6 +24,8 @@ namespace POCAttribute
             .AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ApplicationConnection")))
+
+
             .AddScoped<DbContext, ApplicationDbContext>(f =>
             {
                 return f.GetService<ApplicationDbContext>();
