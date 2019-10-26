@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Hackathon.VALIA.WEB.Data
 {
@@ -15,5 +11,6 @@ namespace Hackathon.VALIA.WEB.Data
 
         public DbSet<Models.Arquivo> Arquivos { get; set; }
         public DbSet<Models.Erros> Erros { get; set; }
+        public DbSet<Models.TipoArquivo> TipoArquivos { get; set; }
     }
 }

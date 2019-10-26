@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
+namespace Hackathon.VALIA.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -36,10 +36,15 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TipoArquivoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("User")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ArquivoId");
+
+                    b.HasIndex("TipoArquivoId");
 
                     b.ToTable("Arquivos");
                 });
@@ -51,11 +56,14 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ArquivoId")
+                    b.Property<int>("ArquivoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Campo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Linha")
+                        .HasColumnType("int");
 
                     b.Property<int>("PosicaoInicial")
                         .HasColumnType("int");
@@ -73,11 +81,35 @@ namespace Hackathon.VALIA.WEB.Migrations.ApplicationDb
                     b.ToTable("Erros");
                 });
 
+            modelBuilder.Entity("Hackathon.VALIA.WEB.Models.TipoArquivo", b =>
+                {
+                    b.Property<int>("TipoArquivoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NomeTipoArquivo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TipoArquivoId");
+
+                    b.ToTable("TipoArquivos");
+                });
+
+            modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Arquivo", b =>
+                {
+                    b.HasOne("Hackathon.VALIA.WEB.Models.TipoArquivo", "TipoArquivo")
+                        .WithMany()
+                        .HasForeignKey("TipoArquivoId");
+                });
+
             modelBuilder.Entity("Hackathon.VALIA.WEB.Models.Erros", b =>
                 {
                     b.HasOne("Hackathon.VALIA.WEB.Models.Arquivo", null)
                         .WithMany("Erros")
-                        .HasForeignKey("ArquivoId");
+                        .HasForeignKey("ArquivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
