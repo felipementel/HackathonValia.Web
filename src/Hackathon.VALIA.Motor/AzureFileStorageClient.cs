@@ -39,7 +39,7 @@ namespace POCAttribute
                         foreach (IListFileItem listResultItem in resultSegment.Results)
                         {
                             var cloudFile = sampleDir.GetFileReference(listResultItem.Uri.ToString());
-                            Console.WriteLine(cloudFile.Uri.ToString());
+                            Console.WriteLine(cloudFile.Uri.ToString()+'\n');
                             //await cloudFile.DownloadToFileAsync(cloudFile.Uri.ToString(), FileMode.Create);
                         }
                     }

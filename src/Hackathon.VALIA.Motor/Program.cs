@@ -27,39 +27,39 @@ namespace POCAttribute
             {
                 Setup.SetCulture();
 
-                AzureFileStorageClient fileStorageClient = new AzureFileStorageClient();
-                await fileStorageClient.DownloadFile();
+                //AzureFileStorageClient fileStorageClient = new AzureFileStorageClient();
+                //await fileStorageClient.DownloadFile();
 
-                //if (Directory.Exists(config["FilesDirectory"]))
-                //{
-                //    DirectoryInfo dirInfo = new DirectoryInfo(config["FilesDirectory"]);
-                //    foreach (string filePath in Directory.EnumerateFiles(config["FilesDirectory"], "*.txt"))
-                //    {
-                //        var lines = File.ReadLines(filePath);
-                //        int lineCount = lines.Count();
-                //        int count = 0;
-                //        bool isContent;
-                //        if (lineCount > 2)
-                //        {
-                //            foreach (string line in lines)
-                //            {
-                //                count++;
-                //                isContent = (count > 1 && count < lineCount);
+                if (Directory.Exists(config["FilesDirectory"]))
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(config["FilesDirectory"]);
+                    foreach (string filePath in Directory.EnumerateFiles(config["FilesDirectory"], "*.txt"))
+                    {
+                        var lines = File.ReadLines(filePath);
+                        int lineCount = lines.Count();
+                        int count = 0;
+                        bool isContent;
+                        if (lineCount > 2)
+                        {
+                            foreach (string line in lines)
+                            {
+                                count++;
+                                isContent = (count > 1 && count < lineCount);
 
-                //                if (isContent)
-                //                {
-                //                    Empregado empregado = new Empregado(line, count);
-                //                    Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
-                //                }
-                //            }
-                //            Console.WriteLine("Fim do processamento do arquivo \"{0}\"", filePath);
-                //        }
-                //        else
-                //        {
-                //            throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
-                //        }
-                //    }
-                //}
+                                if (isContent)
+                                {
+                                    Empregado empregado = new Empregado(line, count, "teste" + count + ".txt");
+                                    Console.WriteLine(string.Format("Fim do processamento da linha {0}", count));
+                                }
+                            }
+                            Console.WriteLine("Fim do processamento do arquivo \"{0}\"", filePath);
+                        }
+                        else
+                        {
+                            throw new FileLoadException("O arquivo não pode ser processado pois deve conter no mínimo três linhas: header, conteúdo e trailer.");
+                        }
+                    }
+                }
 
                 Console.ReadKey();
             }

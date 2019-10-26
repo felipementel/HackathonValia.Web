@@ -1,6 +1,9 @@
-﻿using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+﻿using Hackathon.VALIA.WEB.Data;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using POCAttribute.Models;
 using System;
 
 namespace POCAttribute
@@ -18,7 +21,10 @@ namespace POCAttribute
         {
             services
             .AddLogging()
-            .AddOptions()
+            .AddScoped<Empregado>()
+            .AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ApplicationConnection")))
             .AddApplicationInsightsTelemetry();
         }
     }
